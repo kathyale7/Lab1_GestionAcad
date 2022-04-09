@@ -6,76 +6,52 @@
 package AccesoDatos;
 
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 
 
 
 public class Service {
-//    private peliculasDAO peliculasDAO;
+ protected Connection conexion =null;
 
     
-    private static Service theInstance;
-    
-    
-    public static Service instance() {
-        if (theInstance == null) {
-            theInstance = new Service();
-        }
-        return theInstance;
-    }
-
     public Service() {
-//        this.peliculasDAO = new peliculasDAO();
+
         
     }
     
+protected void conectar() throws SQLException, ClassNotFoundException {
+    Class.forName("oracle.jdbc.driver.OracleDriver");
+    try {
+        conexion = DriverManager.getConnection("jdbc:oracle:thin@localhost1521:XE", "sustem", "root");
+        conexion = getJdbcMydbsource();
+    } catch (NamingException ex) {
+        ex.printStackTrace();
+    }
+}     
     
-    /*usuarios*/
-    
-//    public usuarios crearUsuario(usuarios u){
-//        usuarios result = null;
-//        
-//        try {
-//            result = usuariosDAO.create(u);
-//        } catch (Exception ex) {
-//            Logger.getLogger(Service.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//            return result;
-//    }
-//    
-//    public usuarios login(usuarios u){
-//        usuarios result = null;
-//
-//        try {
-//            result = usuariosDAO.readbyId(u.getId());
-//            
-//            
-//            
-//        } catch (Exception ex) {
-//            Logger.getLogger(Service.class.getName()).log(Level.SEVERE, null, ex);
-//            return null;
-//        }
-//        
-//        if (result == null ||
-//                (!result.getContrasenna().equals(u.getContrasenna())))
-//        {
-//            return null;
-//        }
-//        return result;
-//        
-//    }
-    
-    
-    
-//    public usuarios readbyidU(String id) throws Exception{
-//        return usuariosDAO.readbyId(id);
-//    }
-    
-    
-  
+  protected void desconectar() throws SQLException {
+      if(!conexion.isClosed()){
+          conexion.close();
+      }
+  }
+
+    private Connection getJdbcMydbsource() throws NamingException {
+        Context c = new InitialContext();
+        try{
+            return ((DataSource) c.lookup("jdbc/Mydbsource")).getConnection();
+        } catch (NamingException ex){
+            ex.printStackTrace();
+        } catch (SQLException ex){
+            ex.printStackTrace();
+        }
+     return null; 
+    }
       
 }
