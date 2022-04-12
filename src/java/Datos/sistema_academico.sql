@@ -24,12 +24,12 @@ CREATE TABLE  carrera (codigo int  NOT NULL, nombre varchar(50) NOT NULL, titulo
 CREATE TABLE curso (codigo int NOT NULL, nombre varchar(50) NOT NULL, creditos int NOT NULL, horas_semanales int NOT NULL ,carrera_id int,ciclo_id int) tablespace system;
 CREATE TABLE rol (id_rol INT NOT NULL, descripcion VARCHAR(45) NOT NULL) tablespace system;
 CREATE TABLE usuario (usuario_id VARCHAR(45) NOT NULL, rol_id INT NOT NULL, clave VARCHAR(45) NOT NULL) tablespace system;
-CREATE TABLE profesor (cedula INT NOT NULL, usuario_id VARCHAR(45) NOT NULL, nombre varchar(50) NOT NULL,telefono varchar(50),email varchar(50), fecha_nacimiento date NOT NULL) tablespace system;
-CREATE TABLE grupo (codigo int NOT NULL,ciclo_id int DEFAULT NULL,num_grupo INT NOT NULL,curso_id INT NOT NULL,horario date NOT NULL,profesor_id INT NOT NULL) tablespace system;
-CREATE TABLE alumno (cedula INT NOT NULL, usuario_id VARCHAR(45) NOT NULL, nombre varchar(50) NOT NULL, telefono varchar(50), email varchar(50), fecha_nacimiento date NOT NULL) tablespace system;
+CREATE TABLE profesor (cedula INT NOT NULL, usuario_id VARCHAR(50) NOT NULL, nombre varchar(50) NOT NULL,telefono varchar(50),email varchar(50), fecha_nacimiento VARCHAR(50) NOT NULL) tablespace system;
+CREATE TABLE grupo (codigo int NOT NULL,ciclo_id int DEFAULT NULL,num_grupo INT NOT NULL,curso_id INT NOT NULL,horario varchar(50) NOT NULL,profesor_id INT NOT NULL) tablespace system;
+CREATE TABLE alumno (cedula INT NOT NULL, usuario_id VARCHAR(45) NOT NULL, nombre varchar(50) NOT NULL, telefono varchar(50), email varchar(50), fecha_nacimiento VARCHAR(50) NOT NULL, carrera_id int) tablespace system;
 CREATE TABLE estado (id_estado INT NOT NULL, descripcion VARCHAR(45) NOT NULL) tablespace system;
 CREATE TABLE matricula (alumno_id INT NOT NULL, grupo_num INT NOT NULL, curso_id INT NOT NULL, estado_id INT NOT NULL, nota INT) tablespace system;
-CREATE TABLE  ciclo (codigo int  NOT NULL, anho varchar(50) NOT NULL, numero int NOT NULL, fecha_inicio date DEFAULT NULL, fecha_final date DEFAULT NULL) tablespace system;
+CREATE TABLE  ciclo (codigo int  NOT NULL, anho varchar(50) NOT NULL, numero int NOT NULL, fecha_inicio varchar(50) DEFAULT NULL, fecha_final varchar(50) DEFAULT NULL) tablespace system;
 
 -- -----------------------------------------------------
 -- Creacion de PKs
@@ -57,6 +57,7 @@ alter table grupo add constraint fk_grupo_curso1 foreign key (curso_id) referenc
 alter table grupo add constraint fk_grupo_profesor1 foreign key (profesor_id) references profesor;
 alter table grupo add constraint fk_grupo_ciclo1 foreign key (ciclo_id) references ciclo;
 alter table alumno add constraint fk_alumno_usuario1 foreign key (usuario_id) references usuario;
+alter table alumno add constraint fk_alumno_carrera1 foreign key (carrera_id) references carrera;
 alter table matricula add constraint fk_matricula_alumno1 foreign key (alumno_id) references alumno;
 alter table matricula add constraint fk_matricula_grupo1 foreign key (grupo_num , curso_id) references grupo;
 alter table matricula add constraint fk_matricula_estado1 foreign key (estado_id) references estado;
@@ -137,16 +138,31 @@ UPDATE CURSO SET NOMBRE=NOMBREIN, CREDITOS=CREDITOSIN, HORAS_SEMANALES=HORAS_SEM
 END;
 /
 ---BUSCAR
-CREATE OR REPLACE FUNCTION BUSCAR_CURSO(idbuscar IN CURSO.CODIGO%TYPE)
+CREATE OR REPLACE FUNCTION BUSCAR_CURSO(idbuscar IN VARCHAR2)
 RETURN Types.ref_cursor 
 AS 
         curso_cursor types.ref_cursor; 
 BEGIN 
   OPEN curso_cursor FOR 
-       SELECT CODIGO, NOMBRE, CREDITOS, HORAS_SEMANALES,CARRERA_ID,CICLO_ID FROM CURSO WHERE codigo=idbuscar; 
+       SELECT CODIGO, NOMBRE, CREDITOS, HORAS_SEMANALES,CARRERA_ID,CICLO_ID FROM CURSO WHERE codigo=idbuscar OR nombre=idbuscar;
 RETURN curso_cursor; 
 END;
 /
+
+
+
+CREATE OR REPLACE FUNCTION BUSCAR_CURSO_CARRERA(idbuscar in CARRERA.NOMBRE%TYPE)
+RETURN Types.ref_cursor 
+AS 
+        curso_cursor types.ref_cursor; 
+BEGIN 
+  OPEN curso_cursor FOR 
+       SELECT CODIGO, NOMBRE, CREDITOS, HORAS_SEMANALES,CARRERA_ID,CICLO_ID FROM CURSO WHERE CARRERA_ID IN (SELECT CARRERA_ID FROM CARRERA WHERE NOMBRE=idbuscar);
+RETURN curso_cursor; 
+END;
+/
+
+
 ---LISTAR
 CREATE OR REPLACE FUNCTION LISTAR_CURSO
 RETURN Types.ref_cursor 
@@ -279,16 +295,28 @@ UPDATE PROFESOR SET USUARIO_ID=USUARIO_IDIN, NOMBRE=NOMBREIN, TELEFONO=TELEFONOI
 END;
 /
 ---BUSCAR
-CREATE OR REPLACE FUNCTION BUSCAR_PROFESOR(idbuscar IN PROFESOR.CEDULA%TYPE)
+CREATE OR REPLACE FUNCTION BUSCAR_PROFESOR_ID(idbuscar IN PROFESOR.CEDULA%TYPE)
 RETURN Types.ref_cursor 
 AS 
         profesor_cursor types.ref_cursor; 
 BEGIN 
   OPEN profesor_cursor FOR 
-       SELECT CEDULA, USUARIO_ID, NOMBRE,TELEFONO,EMAIL, FECHA_NACIMIENTO FROM PROFESOR WHERE CEDULA=idbuscar; 
+       SELECT CEDULA, NOMBRE, TELEFONO, EMAIL, FECHA_NACIMIENTO FROM PROFESOR WHERE CEDULA=idbuscar; 
 RETURN profesor_cursor; 
 END;
 /
+
+CREATE OR REPLACE FUNCTION BUSCAR_PROFESOR_NOMBRE(idbuscar IN PROFESOR.NOMBRE%TYPE)
+RETURN Types.ref_cursor 
+AS 
+        profesor_cursor types.ref_cursor; 
+BEGIN 
+  OPEN profesor_cursor FOR 
+       SELECT CEDULA, NOMBRE, TELEFONO, EMAIL, FECHA_NACIMIENTO FROM PROFESOR WHERE NOMBRE=idbuscar; 
+RETURN profesor_cursor; 
+END;
+/
+
 ---LISTAR
 CREATE OR REPLACE FUNCTION LISTAR_PROFESOR
 RETURN Types.ref_cursor 
@@ -354,31 +382,55 @@ end;
 /
 ----------------- TABLA ALUMNO ----------------- 
 ---INSERTAR
-CREATE OR REPLACE PROCEDURE INSERTAR_ALUMNO(CEDULA IN ALUMNO.CEDULA%TYPE, USUARIO_ID IN ALUMNO.USUARIO_ID%TYPE, NOMBRE IN ALUMNO.NOMBRE%TYPE, TELEFONO  IN ALUMNO.TELEFONO%TYPE, EMAIL  IN ALUMNO.EMAIL%TYPE, FECHA_NACIMIENTO IN ALUMNO.FECHA_NACIMIENTO%TYPE)
+CREATE OR REPLACE PROCEDURE INSERTAR_ALUMNO(CEDULA IN ALUMNO.CEDULA%TYPE, USUARIO_ID IN ALUMNO.USUARIO_ID%TYPE, NOMBRE IN ALUMNO.NOMBRE%TYPE, TELEFONO  IN ALUMNO.TELEFONO%TYPE, EMAIL  IN ALUMNO.EMAIL%TYPE, FECHA_NACIMIENTO IN ALUMNO.FECHA_NACIMIENTO%TYPE, CARRERA_ID IN ALUMNO.CARRERA_ID%TYPE)
 AS 
 BEGIN
-INSERT INTO ALUMNO VALUES(CEDULA, USUARIO_ID, NOMBRE,TELEFONO,EMAIL, FECHA_NACIMIENTO);
+INSERT INTO ALUMNO VALUES(CEDULA, USUARIO_ID, NOMBRE,TELEFONO,EMAIL, FECHA_NACIMIENTO, CARRERA_ID);
 
 END;
 /
 ---MODIFICAR
-CREATE OR REPLACE PROCEDURE MODIFICAR_ALUMNO (CEDULAIN IN ALUMNO.CEDULA%TYPE, USUARIO_IDIN IN ALUMNO.USUARIO_ID%TYPE, NOMBREIN IN ALUMNO.NOMBRE%TYPE, TELEFONOIN  IN ALUMNO.TELEFONO%TYPE, EMAILIN  IN ALUMNO.EMAIL%TYPE, FECHA_NACIMIENTOIN IN ALUMNO.FECHA_NACIMIENTO%TYPE)
+CREATE OR REPLACE PROCEDURE MODIFICAR_ALUMNO (CEDULAIN IN ALUMNO.CEDULA%TYPE, USUARIO_IDIN IN ALUMNO.USUARIO_ID%TYPE, NOMBREIN IN ALUMNO.NOMBRE%TYPE, TELEFONOIN  IN ALUMNO.TELEFONO%TYPE, EMAILIN  IN ALUMNO.EMAIL%TYPE, FECHA_NACIMIENTOIN IN ALUMNO.FECHA_NACIMIENTO%TYPE, CARRERA_IDIN IN ALUMNO.CARRERA_ID%TYPE)
 AS
 BEGIN
-UPDATE ALUMNO SET USUARIO_ID=USUARIO_IDIN, NOMBRE=NOMBREIN, TELEFONO=TELEFONOIN, EMAIL=EMAILIN, FECHA_NACIMIENTO=FECHA_NACIMIENTOIN WHERE CEDULA=CEDULAIN;
+UPDATE ALUMNO SET USUARIO_ID=USUARIO_IDIN, NOMBRE=NOMBREIN, TELEFONO=TELEFONOIN, EMAIL=EMAILIN, FECHA_NACIMIENTO=FECHA_NACIMIENTOIN, CARRERA_ID=CARRERA_IDIN WHERE CEDULA=CEDULAIN;
 END;
 /
 ---BUSCAR
-CREATE OR REPLACE FUNCTION BUSCAR_ALUMNO(idbuscar IN ALUMNO.CEDULA%TYPE)
+CREATE OR REPLACE FUNCTION BUSCAR_ALUMNO_iD(idbuscar IN ALUMNO.CEDULA%TYPE)
 RETURN Types.ref_cursor 
 AS 
         alumno_cursor types.ref_cursor; 
 BEGIN 
   OPEN alumno_cursor FOR 
-       SELECT CEDULA, USUARIO_ID, NOMBRE,TELEFONO,EMAIL, FECHA_NACIMIENTO FROM ALUMNO WHERE CEDULA=idbuscar; 
+       SELECT CEDULA, USUARIO_ID, NOMBRE,TELEFONO,EMAIL, FECHA_NACIMIENTO, carrera_id FROM ALUMNO WHERE CEDULA=idbuscar; 
 RETURN alumno_cursor; 
 END;
 /
+
+CREATE OR REPLACE FUNCTION BUSCAR_ALUMNO_NOMBRE(idbuscar IN ALUMNO.NOMBRE%TYPE)
+RETURN Types.ref_cursor 
+AS 
+        alumno_cursor types.ref_cursor; 
+BEGIN 
+  OPEN alumno_cursor FOR 
+       SELECT CEDULA, USUARIO_ID, NOMBRE,TELEFONO,EMAIL, FECHA_NACIMIENTO, carrera_id FROM ALUMNO WHERE NOMBRE=idbuscar; 
+RETURN alumno_cursor; 
+END;
+/
+
+CREATE OR REPLACE FUNCTION BUSCAR_ALUMNO_CARRERA(idbuscar IN CARRERA.NOMBRE%TYPE)
+RETURN Types.ref_cursor 
+AS 
+        alumno_cursor types.ref_cursor; 
+BEGIN 
+  OPEN alumno_cursor FOR 
+       SELECT CEDULA, USUARIO_ID, NOMBRE,TELEFONO,EMAIL, FECHA_NACIMIENTO, carrera_id FROM ALUMNO WHERE CARRERA_ID IN (SELECT CARRERA_ID FROM CARRERA WHERE NOMBRE=idbuscar);
+RETURN alumno_cursor; 
+END;
+/
+
+
 ---LISTAR
 CREATE OR REPLACE FUNCTION LISTAR_ALUMNO
 RETURN Types.ref_cursor 
@@ -469,6 +521,18 @@ BEGIN
 RETURN matricula_cursor; 
 END;
 /
+
+CREATE OR REPLACE FUNCTION BUSCAR_MATRICULA(ALUMNO_ID IN MATRICULA.ALUMNO_ID%TYPE)
+RETURN Types.ref_cursor 
+AS 
+        matricula_cursor types.ref_cursor; 
+BEGIN 
+  OPEN matricula_cursor FOR 
+       SELECT ALUMNO_ID, GRUPO_NUM, CURSO_ID, ESTADO_ID, NOTA FROM MATRICULA WHERE ALUMNO_ID=ALUMNO_IDIN;
+RETURN matricula_cursor; 
+END;
+/
+
 ---LISTAR
 CREATE OR REPLACE FUNCTION LISTAR_MATRICULA
 RETURN Types.ref_cursor 
@@ -533,39 +597,53 @@ begin
 end;
 /
 
+----------------- PRUEBAS ----------------- 
+---CARRERA
+execute INSERTAR_CARRERA(1000, 'INGENIERIA EN SISTEMAS', 'BACHILLERATO')
 
---insert into rol(id_rol, descripcion) values(1, "Matriculador");
---insert into rol(id_rol, descripcion) values(2, "Profesor");
---insert into rol(id_rol, descripcion) values(3, "alumno");
+---ROLES
+execute INSERTAR_ROL(1, 'Aministrador');
+execute INSERTAR_ROL(2, 'Matriculador');
+execute INSERTAR_ROL(3, 'Profesor');
+execute INSERTAR_ROL(4, 'Alumno');
 
---insert into usuario(id_usuario, rol_id, clave, ultimo_aceso, activo) 
-    --values("12345", 1, "qwerty", CURDATE(), 1);
---insert into usuario(id_usuario, rol_id, clave, ultimo_aceso, activo) 
-   -- values("6789", 1, "qaqaqa", CURDATE(), 1);
+---USUARIOS
+execute INSERTAR_USUARIO(12345, 1, 'root123');
+execute INSERTAR_USUARIO(402381288, 3, 'test509');
+execute INSERTAR_USUARIO(109381291, 4, 'patito20');
+
+---ESTADOS
+execute INSERTAR_ESTADO(101, 'Aprobado');
+execute INSERTAR_ESTADO(102, 'En Progreso');
+execute INSERTAR_ESTADO(103, 'Reprobado');
 
     
---insert into administrador(id_administrador, usuario_id, apellido1, apellido2, nombre, telefono, e_mail)
-  --      values(123456, "12345", "Barrientos", "Monge", "Joaquin", "1010911", "admin01@cursoslibres.com");
---insert into administrador(id_administrador, usuario_id, apellido1, apellido2, nombre, telefono, e_mail)
-  --      values(6789, "6789", "Sandoval", "Blandon", "Kathy", "0544245", "admin02@cursoslibres.com");
---insert into profesor(id_profesor, usuario_id, apellido1, apellido2, nombre, telefono, e_mail)
- --       values(11111, "11111", "Elizondo", "Quesada", "Ramiro", "90909090", "profe01@cursoslibres.com");
---insert into alumno(id_alumno, usuario_id, apellido1, apellido2, nombre, telefono, e_mail)
-  --      values(1212, "1212", "Herrera", "Viquez", "Fulano", "666999666", "alumno01@cursoslibres.com");
+---PROFESOR
+execute INSERTAR_PROFESOR (402381288, '402381288', 'Maria Solis','90909090','profe01@academia.com', '1970-02-01 00:00:01');
+
+select BUSCAR_PROFESOR_ID(402381288) from dual;
+select BUSCAR_PROFESOR_NOMBRE('Maria Solis') from dual;
 
 
---insert into estado (id_estado, descripcion) values(101, "Aprobado");
---insert into estado (id_estado, descripcion) values(102, "En Progreso");
---insert into estado (id_estado, descripcion) values(103, "Reprobado");
+---ALUMNOS
+execute INSERTAR_ALUMNO (109381291, '109381291', 'Esteban Fonseca', '87902281', 'alumno01@academia.com', '2000-06-09 00:00:01');
 
 
-/* insert into carrera (id_area, descripcion) values (100, "Redes");
-insert into carrera (id_area, descripcion) values (200, "Base de Datos");
-insert into carrera (id_area, descripcion) values (300, "Idiomas");
+---CICLO
+execute INSERTAR_CICLO (200, '2022', 1, '2022-03-08', '2022-06-22');
+
+---CURSO
+execute INSERTAR_CURSO (300, 'FUNDAMENTOS DE INFORMATICA', 4, 4,1000,200);
+
+select BUSCAR_CURSO(300) from dual;
+select BUSCAR_CURSO('FUNDAMENTOS DE INFORMATICA') from dual;
+select BUSCAR_CURSO_CARRERA('INGENIERIA EN SISTEMAS') from dual;
 
 
-insert into curso (id_curso, descripcion, carrera_id) values (2000, "Introduccion a Base de Datos",200);
-insert into usuario(id_usuario, rol_id, clave, ultimo_aceso, activo) 
-    values("437837123", 2, "profe", '2020-01-01 00:00:01', 1);
+---GRUPO
+execute INSERTAR_GRUPO(400,200,1,300,'18:00:00',402381288);
 
- */
+---MATRICULA
+execute INSERTAR_MATRICULA (109381291, 400, 300, 102, 0);
+
+
