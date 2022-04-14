@@ -5,6 +5,7 @@
 -- Dropeo de tablas y objetos
 -- -----------------------------------------------------
 
+
 DROP TABLE carrera cascade constraints;
 DROP TABLE curso cascade constraints;
 DROP TABLE rol cascade constraints;

@@ -9,13 +9,15 @@ package AccesoDatos;
  *
  * @author ksand
  */
-public class GlobalException {
-
+public class GlobalException extends java.lang.Exception {
+    
+    /** Creates a new instance of GlobalException */
     public GlobalException() {
     }
-
-    GlobalException(String no_se_ha_localizado_el_Driver) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    
+    public GlobalException(String msg)
+    {
+        super(msg);
     }
     
 }

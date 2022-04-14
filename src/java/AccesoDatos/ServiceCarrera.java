@@ -4,63 +4,53 @@
  */
 package AccesoDatos;
 
+import Logica.carrera;
 import Logica.curso;
-import java.sql.ResultSet;
-import java.util.Collection;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 import java.sql.CallableStatement;
-import java.sql.Types;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import oracle.jdbc.OracleTypes;
+import java.util.Collection;
 
 /**
  *
  * @author ksand
  */
-public class ServiceCurso extends Service {
+public class ServiceCarrera extends Service {
 
-    private static final String insertarCurso = "{call INSERTAR_CURSO (?, ?, ?, ?,?,?)}";
-    private static final String listarCurso = "{?=call LISTAR_CURSO ()}";
-    private static final String buscarCurso = "{?=call BUSCAR_CURSO (?)}";
-    private static final String modificarCurso = "{call MODIFICAR_CURSO (?, ?, ?, ?,?,?)}";
-    private static final String eliminarCurso = "{call ELIMINAR_CURSO (?)}";
+    private static final String insertarCarrera = "{call INSERTAR_CARRERA (?, ?, ?)}";
+    private static final String listarCarrera = "{?=call LISTAR_CARRERA ()}";
+    private static final String buscarCarrera = "{?=call BUSCAR_CARRERA (?)}";
+    private static final String modificarCarrera = "{call MODIFICAR_CARRERA (?, ?, ?)}";
+    private static final String eliminarCarrera = "{call ELIMINAR_CARRERA (?)}";
 
-    public ServiceCurso() {
+    public ServiceCarrera() {
     }
 
-    public Collection listarCurso() throws SQLException, NoDataException, GlobalException {
-        try {
-            conectar();
-        } catch (ClassNotFoundException ex){
-            throw new GlobalException("No se ha localizado el Driver");
-        } catch (SQLException e) {
-            throw new NoDataException ("La base de datos no se encuentra disponible");
-        }
+    public Collection listarCarrera() throws SQLException, NoDataException, GlobalException {
+//        try {
+//            conectar();
+//        } catch (ClassNotFoundException ex){
+//            throw new GlobalException("No se ha localizado el Driver");
+//        } catch (SQLException e) {
+//            throw new NoDataException ("La base de datos no se encuentra disponible");
+//        }
 
         ResultSet rs = null;
         ArrayList collecion = new ArrayList();
-        curso eCurso = null;
+        carrera eCarrera = null;
         CallableStatement pstmt = null;
         
         try {
-            pstmt = conexion.prepareCall(listarCurso);
-            pstmt.registerOutParameter(1, OracleTypes.CURSOR);
+            pstmt = conexion.prepareCall(listarCarrera);
+           // pstmt.registerOutParameter(1, );
             pstmt.execute();
             rs = (ResultSet) pstmt.getObject(1);
             while (rs.next()){
-                eCurso = new curso (rs.getInt("codigo"),
+                eCarrera = new carrera (rs.getInt("codigo"),
                 rs.getString("nombre"),
-                rs.getInt("creditos"),
-                rs.getInt("horas_semanales"),
-                rs.getInt("carrera_id"),
-                rs.getInt("ciclo_id"));
-                collecion.add(eCurso);
+                rs.getString("titulo"));
+                collecion.add(eCarrera);
             } } catch (SQLException e){
                     e.printStackTrace();
                     throw new GlobalException("Sentencia no valida");
@@ -86,7 +76,7 @@ public class ServiceCurso extends Service {
 
    
 
-    public void insertarCurso(curso eCurso) throws GlobalException, NoDataException{
+    public void insertarCarrera(carrera eCarrera) throws GlobalException, NoDataException{
         try
 		{
 			conectar();
@@ -104,13 +94,11 @@ public class ServiceCurso extends Service {
 		try
 		{
 			 
-			pstmt = conexion.prepareCall(insertarCurso);
-			pstmt.setInt(1, eCurso.getCodigo());
-			pstmt.setString(2, eCurso.getNombre());
-			pstmt.setInt(3, eCurso.getCreditos());
-			pstmt.setInt(4, eCurso.getHoras_semanales());
-			pstmt.setInt(5, eCurso.getCarrera_id());
-                        pstmt.setInt(6, eCurso.getCiclo_id());
+			pstmt = conexion.prepareCall(insertarCarrera);
+			pstmt.setInt(1, eCarrera.getCodigo());
+			pstmt.setString(2, eCarrera.getNombre());
+			pstmt.setString(3, eCarrera.getTitulo());
+			
 			
 			boolean resultado = pstmt.execute();
 			if (resultado == true)
