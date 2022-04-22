@@ -195,7 +195,7 @@ public class ServiceAlumno extends Service {
         }
     }
 
-    public alumno buscarAlumno_id(int id) throws GlobalException, NoDataException {
+    public Collection buscarAlumno_id(int id) throws GlobalException, NoDataException {
 
         try {
             conectar();
@@ -244,10 +244,10 @@ public class ServiceAlumno extends Service {
         if (coleccion == null || coleccion.size() == 0) {
             throw new NoDataException("No hay datos");
         }
-        return eAlumno;
+        return coleccion;
     }
 
-    public alumno buscarAlumno__nombre(String nombre) throws GlobalException, NoDataException {
+    public Collection buscarAlumno__nombre(String nombre) throws GlobalException, NoDataException {
 
         try {
             conectar();
@@ -296,10 +296,10 @@ public class ServiceAlumno extends Service {
         if (coleccion == null || coleccion.size() == 0) {
             throw new NoDataException("No hay datos");
         }
-        return eAlumno;
+        return coleccion;
     }
     
-    public alumno buscarAlumno__carrera(String carrera_id) throws GlobalException, NoDataException {
+    public Collection buscarAlumno__carrera(int carrera_id) throws GlobalException, NoDataException {
 
         try {
             conectar();
@@ -315,7 +315,7 @@ public class ServiceAlumno extends Service {
         try {
             pstmt = conexion.prepareCall(buscarAlumno__carrera);
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
-            pstmt.setString(2, carrera_id);
+            pstmt.setInt(2, carrera_id);
             pstmt.execute();
             rs = (ResultSet) pstmt.getObject(1);
             while (rs.next()) {
@@ -348,6 +348,6 @@ public class ServiceAlumno extends Service {
         if (coleccion == null || coleccion.size() == 0) {
             throw new NoDataException("No hay datos");
         }
-        return eAlumno;
+        return coleccion;
     }
 }
