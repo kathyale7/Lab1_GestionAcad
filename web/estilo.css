@@ -164,8 +164,8 @@ body{
 	height: 300px;
 }
 .space{
-	width: 20px;
-	height: 15px;
+	width: 21px;
+	height: 30px;
 }
 
 button {
@@ -206,13 +206,14 @@ select{
 	margin: 8px 0;
 	border: none;
 	cursor: pointer;
-	width: 100%;
+	width: 75%;
 	border-radius: 10px;
 	font-size: large;
 	width: 250px;
 	height: 40px;;
 }
 
+  
 input[type=text], input[type=password] {
 	width: 100%;
 	padding: 12px 20px;
@@ -262,3 +263,4 @@ input[type=text], input[type=password] {
 	border-radius: 10px;
 	background-color: #ddd;
   }
+ 
