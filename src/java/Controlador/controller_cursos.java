@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ksand
  */
-@WebServlet(name = "mantenimientocurso", urlPatterns = {"/mantenimientocurso", "/Administrador", "/cursos"})
+@WebServlet(name = "mantenimientocurso", urlPatterns = {"/mantenimientocurso", "/cursos"})
 public class controller_cursos extends HttpServlet {
 
     /**
@@ -166,8 +166,10 @@ public class controller_cursos extends HttpServlet {
 
                 request.setAttribute("ListaCursos", cursos_oferta);
             } catch (GlobalException | NoDataException ex) {
+                
                 Logger.getLogger(controller_cursos.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
            
            request.getRequestDispatcher("listarcursos.jsp").forward(request, response);
 

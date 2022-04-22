@@ -192,7 +192,7 @@ public class ServiceProfesor extends Service {
         }
     }
 
-    public profesor buscarProfesor_id(int id) throws GlobalException, NoDataException {
+    public Collection buscarProfesor_id(int id) throws GlobalException, NoDataException {
 
         try {
             conectar();
@@ -240,10 +240,10 @@ public class ServiceProfesor extends Service {
         if (coleccion == null || coleccion.size() == 0) {
             throw new NoDataException("No hay datos");
         }
-        return eProfesor;
+        return coleccion;
     }
 
-    public profesor buscarProfesor__nombre(String nombre) throws GlobalException, NoDataException {
+    public Collection buscarProfesor__nombre(String nombre) throws GlobalException, NoDataException {
 
         try {
             conectar();
@@ -289,8 +289,10 @@ public class ServiceProfesor extends Service {
             }
         }
         if (coleccion == null || coleccion.size() == 0) {
+            profesor p = new profesor(0,"NA","NA","NA","NA","NA");
+            coleccion.add(p);
             throw new NoDataException("No hay datos");
         }
-        return eProfesor;
+        return coleccion;
     }
 }

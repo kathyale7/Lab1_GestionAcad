@@ -313,7 +313,7 @@ AS
         profesor_cursor types.ref_cursor; 
 BEGIN 
   OPEN profesor_cursor FOR 
-       SELECT CEDULA, NOMBRE, TELEFONO, EMAIL, FECHA_NACIMIENTO FROM PROFESOR WHERE CEDULA=idbuscar; 
+       SELECT CEDULA, USUARIO_ID, NOMBRE, TELEFONO, EMAIL, FECHA_NACIMIENTO FROM PROFESOR WHERE CEDULA=idbuscar; 
 RETURN profesor_cursor; 
 END;
 /
@@ -324,7 +324,7 @@ AS
         profesor_cursor types.ref_cursor; 
 BEGIN 
   OPEN profesor_cursor FOR 
-       SELECT CEDULA, NOMBRE, TELEFONO, EMAIL, FECHA_NACIMIENTO FROM PROFESOR WHERE NOMBRE=idbuscar; 
+       SELECT CEDULA, USUARIO_ID, NOMBRE, TELEFONO, EMAIL, FECHA_NACIMIENTO FROM PROFESOR WHERE NOMBRE=idbuscar; 
 RETURN profesor_cursor; 
 END;
 /

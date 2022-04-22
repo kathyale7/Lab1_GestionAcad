@@ -33,7 +33,7 @@
             <div class="space"></div>
 <div>
                 <form action="mantenimientocurso">
-                    <input type="text" name="codigo" placeholder ="Codigo">
+                    <input type="text" name="codigo" placeholder ="Codigo" required>
                     
                     <button type="submit" name="accion" value="Buscar_c"> Buscar</button>
                 </form>
@@ -41,7 +41,7 @@
             <div>
                 <form action="mantenimientocurso">
                     
-                    <input type="text" name="buscar" placeholder="Nombre">
+                    <input type="text" name="buscar" placeholder="Nombre" required>
                    <button type="submit" name="accion" value="Buscar_n"> Buscar</button>
                     
                 </form>
@@ -51,7 +51,7 @@
             <div>
                 <form action="mantenimientocurso">
                    
-                    <input type="text" name="carrera" placeholder="Carrera">
+                    <input type="text" name="carrera" placeholder="Carrera" required>
                    <button type="submit" name="accion" value="Buscar_ca"> Buscar</button>
                 </form>
                 <a href="mantenimientocurso?accion=ver">Listar todos los cursos</a>
@@ -97,8 +97,8 @@
                         <td><%=m.getCiclo_id()%></td>
 
                         <td> 
-                            <a cclass=Opciones href=#>Agregar grupo</a>
-                            <a cclass=Opciones href=#>Ver grupos</a>
+                            <a class=Opciones href=#>Agregar grupo</a>
+                            <a class=Opciones href=#>Ver grupos</a>
                         </td>
                     </tr>
                     <%}%>
