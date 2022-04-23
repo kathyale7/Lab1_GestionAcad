@@ -12,6 +12,10 @@
         <servlet-name>controller_alumnos</servlet-name>
         <servlet-class>Controlador.controller_alumnos</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>controller_matricula</servlet-name>
+        <servlet-class>Controlador.controller_matricula</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>controller_cursos</servlet-name>
         <url-pattern>/controller_cursos</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>controller_alumnos</servlet-name>
         <url-pattern>/controller_alumnos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>controller_matricula</servlet-name>
+        <url-pattern>/controller_matricula</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

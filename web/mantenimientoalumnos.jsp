@@ -98,7 +98,7 @@
                         <td><%=m.getFecha_nacimiento()%></td>
                         <td><%=m.getCarrera_id()%></td>
                         <td> 
-                            <a class=Opciones href=#>Ver historial</a>
+                            <a class=Opciones href="historial_alumno?accion=Buscar_alumno&id_alumno=<%=m.getCedula()%>">Ver historial</a>
                             
                         </td>
                     </tr>

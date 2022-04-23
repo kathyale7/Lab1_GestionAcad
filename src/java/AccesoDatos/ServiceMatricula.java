@@ -4,33 +4,34 @@
  */
 package AccesoDatos;
 
-import Logica.curso;
-import java.sql.ResultSet;
-import java.util.Collection;
-import java.sql.SQLException;
+
+import Logica.matricula;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import oracle.jdbc.OracleTypes;
 
 /**
  *
  * @author ksand
  */
-public class ServiceCurso extends Service {
+public class ServiceMatricula extends Service {
 
-    private static final String insertarCurso = "{call INSERTAR_CURSO (?, ?, ?, ?,?,?)}";
-    private static final String listarCurso = "{?=call LISTAR_CURSO ()}";
-    private static final String buscarCurso_ID = "{?=call BUSCAR_CURSO_ID (?)}";
-    private static final String buscarCurso_Nombre = "{?=call BUSCAR_CURSO_Nombre (?)}";
-    private static final String buscarCurso_carrera = "{?=call BUSCAR_CURSO_CARRERA (?)}";
-    private static final String modificarCurso = "{call MODIFICAR_CURSO (?, ?, ?, ?,?,?)}";
-    private static final String eliminarCurso = "{call ELIMINAR_CURSO (?)}";
+    private static final String insertarMatricula = "{call INSERTAR_MATRICULA (?, ?, ?, ?, ?)}";
+    private static final String listarMatricula = "{?=call LISTAR_MATRICULA ()}";
+    private static final String buscarMatricula= "{?=call BUSCAR_MATRICULA (?, ?, ?)}";
+    private static final String buscarMatricula_ID = "{?=call BUSCAR_MATRICULA_ID (?)}";
+    private static final String buscarMatricula_Grupo = "{?=call BUSCAR_MATRICULA_GRUPO (?)}";
+    private static final String modificarMatricula = "{call MODIFICAR_MATRICULA (?, ?, ?, ?, ?)}";
+    private static final String eliminarMatricula = "{call ELIMINAR_MATRICULA (?, ?, ?)}";
 
-    public ServiceCurso() {
+    public ServiceMatricula() {
     }
 
-    public Collection listarCurso() throws SQLException, NoDataException, GlobalException {
+    public Collection listarMatricula() throws SQLException, NoDataException, GlobalException {
         try {
             conectar();
         } catch (ClassNotFoundException ex) {
@@ -41,22 +42,21 @@ public class ServiceCurso extends Service {
 
         ResultSet rs = null;
         ArrayList collecion = new ArrayList();
-        curso eCurso = null;
+        matricula eMatricula = null;
         CallableStatement pstmt = null;
 
         try {
-            pstmt = conexion.prepareCall(listarCurso);
+            pstmt = conexion.prepareCall(listarMatricula);
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
             pstmt.execute();
             rs = (ResultSet) pstmt.getObject(1);
             while (rs.next()) {
-                eCurso = new curso(rs.getInt("codigo"),
-                        rs.getString("nombre"),
-                        rs.getInt("creditos"),
-                        rs.getInt("horas_semanales"),
-                        rs.getInt("carrera_id"),
-                        rs.getInt("ciclo_id"));
-                collecion.add(eCurso);
+                eMatricula = new matricula(rs.getInt("ALUMNO_ID"),
+                        rs.getInt("GRUPO_NUM"),
+                        rs.getInt("CURSO_ID"),
+                        rs.getInt("ESTADO_ID"),
+                rs.getInt("NOTA"));
+                collecion.add(eMatricula);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -80,7 +80,7 @@ public class ServiceCurso extends Service {
         return collecion;
     }
 
-    public void insertarCurso(curso eCurso) throws GlobalException, NoDataException {
+    public void insertarMatricula(matricula eMatricula) throws GlobalException, NoDataException {
         try {
             conectar();
         } catch (ClassNotFoundException e) {
@@ -92,13 +92,13 @@ public class ServiceCurso extends Service {
 
         try {
 
-            pstmt = conexion.prepareCall(insertarCurso);
-            pstmt.setInt(1, eCurso.getCodigo());
-            pstmt.setString(2, eCurso.getNombre());
-            pstmt.setInt(3, eCurso.getCreditos());
-            pstmt.setInt(4, eCurso.getHoras_semanales());
-            pstmt.setInt(5, eCurso.getCarrera_id());
-            pstmt.setInt(6, eCurso.getCiclo_id());
+            pstmt = conexion.prepareCall(insertarMatricula);
+            pstmt.setInt(1, eMatricula.getAlumno_id());
+            pstmt.setInt(2, eMatricula.getGrupo_num());
+            pstmt.setInt(3, eMatricula.getCurso_id());
+            pstmt.setInt(4, 102);
+            pstmt.setInt(5, eMatricula.getNota());
+
 
             boolean resultado = pstmt.execute();
             if (resultado == true) {
@@ -120,7 +120,7 @@ public class ServiceCurso extends Service {
         }
     }
 
-    public void modificarCurso(curso eCurso) throws GlobalException, NoDataException {
+    public void modificarMatricula(matricula eMatricula) throws GlobalException, NoDataException {
         try {
             conectar();
         } catch (ClassNotFoundException e) {
@@ -130,13 +130,12 @@ public class ServiceCurso extends Service {
         }
         PreparedStatement pstmt = null;
         try {
-            pstmt = conexion.prepareStatement(modificarCurso);
-            pstmt.setInt(1, eCurso.getCodigo());
-            pstmt.setString(2, eCurso.getNombre());
-            pstmt.setInt(3, eCurso.getCreditos());
-            pstmt.setInt(4, eCurso.getHoras_semanales());
-            pstmt.setInt(5, eCurso.getCarrera_id());
-            pstmt.setInt(6, eCurso.getCiclo_id());
+            pstmt = conexion.prepareStatement(modificarMatricula);
+           pstmt.setInt(1, eMatricula.getAlumno_id());
+            pstmt.setInt(2, eMatricula.getGrupo_num());
+            pstmt.setInt(3, eMatricula.getCurso_id());
+            pstmt.setInt(4, eMatricula.getEstado());
+            pstmt.setInt(5, eMatricula.getNota());
             int resultado = pstmt.executeUpdate();
 
             //si es diferente de 0 es porq si afecto un registro o mas
@@ -159,7 +158,7 @@ public class ServiceCurso extends Service {
         }
     }
 
-    public void eliminarCurso(int id) throws GlobalException, NoDataException {
+    public void eliminarMatricula(int id, int grupo, int curso) throws GlobalException, NoDataException {
         try {
             conectar();
         } catch (ClassNotFoundException e) {
@@ -169,8 +168,10 @@ public class ServiceCurso extends Service {
         }
         PreparedStatement pstmt = null;
         try {
-            pstmt = conexion.prepareStatement(eliminarCurso);
+            pstmt = conexion.prepareStatement(eliminarMatricula);
             pstmt.setInt(1, id);
+            pstmt.setInt(2, grupo);
+            pstmt.setInt(3, curso);
 
             int resultado = pstmt.executeUpdate();
 
@@ -193,7 +194,7 @@ public class ServiceCurso extends Service {
         }
     }
 
-    public Collection buscarCurso_id(int id) throws GlobalException, NoDataException {
+    public Collection buscarMatricula_id(int id) throws GlobalException, NoDataException {
 
         try {
             conectar();
@@ -204,22 +205,21 @@ public class ServiceCurso extends Service {
         }
         ResultSet rs = null;
         ArrayList coleccion = new ArrayList();
-        curso eCurso = null;
+        matricula eMatricula = null;
         CallableStatement pstmt = null;
         try {
-            pstmt = conexion.prepareCall(buscarCurso_ID);
+            pstmt = conexion.prepareCall(buscarMatricula_ID);
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
             pstmt.setInt(2, id);
             pstmt.execute();
             rs = (ResultSet) pstmt.getObject(1);
             while (rs.next()) {
-                eCurso = new curso(rs.getInt("codigo"),
-                        rs.getString("nombre"),
-                        rs.getInt("creditos"),
-                        rs.getInt("horas_semanales"),
-                        rs.getInt("carrera_id"),
-                        rs.getInt("ciclo_id"));
-                coleccion.add(eCurso);
+                eMatricula = new matricula(rs.getInt("ALUMNO_ID"),
+                        rs.getInt("GRUPO_NUM"),
+                        rs.getInt("CURSO_ID"),
+                        rs.getInt("ESTADO_ID"),
+                        rs.getInt("NOTA"));
+                coleccion.add(eMatricula);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -244,7 +244,7 @@ public class ServiceCurso extends Service {
         return coleccion;
     }
 
-    public Collection buscarCurso_carrera(int carrera_id) throws GlobalException, NoDataException {
+    public Collection buscarMatricula_grupo(int grupo) throws GlobalException, NoDataException {
 
         try {
             conectar();
@@ -255,22 +255,21 @@ public class ServiceCurso extends Service {
         }
         ResultSet rs = null;
         ArrayList coleccion = new ArrayList();
-        curso eCurso = null;
+        matricula eMatricula = null;
         CallableStatement pstmt = null;
         try {
-            pstmt = conexion.prepareCall(buscarCurso_carrera);
+            pstmt = conexion.prepareCall(buscarMatricula_Grupo);
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
-            pstmt.setInt(2, carrera_id);
+            pstmt.setInt(2, grupo);
             pstmt.execute();
             rs = (ResultSet) pstmt.getObject(1);
             while (rs.next()) {
-                eCurso = new curso(rs.getInt("codigo"),
-                        rs.getString("nombre"),
-                        rs.getInt("creditos"),
-                        rs.getInt("horas_semanales"),
-                        rs.getInt("carrera_id"),
-                        rs.getInt("ciclo_id"));
-                coleccion.add(eCurso);
+                eMatricula = new matricula(rs.getInt("ALUMNO_ID"),
+                        rs.getInt("GRUPO_NUM"),
+                        rs.getInt("CURSO_ID"),
+                        rs.getInt("ESTADO_ID"),
+                        rs.getInt("NOTA"));
+                coleccion.add(eMatricula);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -295,55 +294,6 @@ public class ServiceCurso extends Service {
         return coleccion;
     }
 
-    public Collection buscarCurso_nombre(String curso_nombre) throws GlobalException, NoDataException {
-
-        try {
-            conectar();
-        } catch (ClassNotFoundException e) {
-            throw new GlobalException("No se ha localizado el driver");
-        } catch (SQLException e) {
-            throw new NoDataException("La base de datos no se encuentra disponible");
-        }
-        ResultSet rs = null;
-        ArrayList coleccion = new ArrayList();
-        curso eCurso = null;
-        CallableStatement pstmt = null;
-        try {
-            pstmt = conexion.prepareCall(buscarCurso_Nombre);
-            pstmt.registerOutParameter(1, OracleTypes.CURSOR);
-            pstmt.setString(2, curso_nombre);
-            pstmt.execute();
-            rs = (ResultSet) pstmt.getObject(1);
-            while (rs.next()) {
-                eCurso = new curso(rs.getInt("codigo"),
-                        rs.getString("nombre"),
-                        rs.getInt("creditos"),
-                        rs.getInt("horas_semanales"),
-                        rs.getInt("carrera_id"),
-                        rs.getInt("ciclo_id"));
-                coleccion.add(eCurso);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-            throw new GlobalException("Sentencia no valida");
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (pstmt != null) {
-                    pstmt.close();
-                }
-                desconectar();
-            } catch (SQLException e) {
-                throw new GlobalException("Estatutos invalidos o nulos");
-            }
-        }
-        if (coleccion == null || coleccion.size() == 0) {
-            throw new NoDataException("No hay datos");
-        }
-        return coleccion;
-    }
-
+    
+    
 }
