@@ -24,6 +24,7 @@ public class ServiceCurso extends Service {
     private static final String buscarCurso_ID = "{?=call BUSCAR_CURSO_ID (?)}";
     private static final String buscarCurso_Nombre = "{?=call BUSCAR_CURSO_Nombre (?)}";
     private static final String buscarCurso_carrera = "{?=call BUSCAR_CURSO_CARRERA (?)}";
+    private static final String BUSCAR_CURSO_carrera_ciclo = "{?=call BUSCAR_CURSO_carrera_ciclo (?, ?)}";
     private static final String modificarCurso = "{call MODIFICAR_CURSO (?, ?, ?, ?,?,?)}";
     private static final String eliminarCurso = "{call ELIMINAR_CURSO (?)}";
 
@@ -312,6 +313,58 @@ public class ServiceCurso extends Service {
             pstmt = conexion.prepareCall(buscarCurso_Nombre);
             pstmt.registerOutParameter(1, OracleTypes.CURSOR);
             pstmt.setString(2, curso_nombre);
+            pstmt.execute();
+            rs = (ResultSet) pstmt.getObject(1);
+            while (rs.next()) {
+                eCurso = new curso(rs.getInt("codigo"),
+                        rs.getString("nombre"),
+                        rs.getInt("creditos"),
+                        rs.getInt("horas_semanales"),
+                        rs.getInt("carrera_id"),
+                        rs.getInt("ciclo_id"));
+                coleccion.add(eCurso);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            throw new GlobalException("Sentencia no valida");
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                desconectar();
+            } catch (SQLException e) {
+                throw new GlobalException("Estatutos invalidos o nulos");
+            }
+        }
+        if (coleccion == null || coleccion.size() == 0) {
+            throw new NoDataException("No hay datos");
+        }
+        return coleccion;
+    }
+
+    public Collection buscarCURSO_carrera_ciclo(int carrera_id, int ciclo_id) throws GlobalException, NoDataException {
+
+        try {
+            conectar();
+        } catch (ClassNotFoundException e) {
+            throw new GlobalException("No se ha localizado el driver");
+        } catch (SQLException e) {
+            throw new NoDataException("La base de datos no se encuentra disponible");
+        }
+        ResultSet rs = null;
+        ArrayList coleccion = new ArrayList();
+        curso eCurso = null;
+        CallableStatement pstmt = null;
+        try {
+            pstmt = conexion.prepareCall(BUSCAR_CURSO_carrera_ciclo);
+            pstmt.registerOutParameter(1, OracleTypes.CURSOR);
+            pstmt.setInt(2, carrera_id);
+            pstmt.setInt(3, ciclo_id);
             pstmt.execute();
             rs = (ResultSet) pstmt.getObject(1);
             while (rs.next()) {

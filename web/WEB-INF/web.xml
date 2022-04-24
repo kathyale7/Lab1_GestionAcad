@@ -20,6 +20,18 @@
         <servlet-name>controller_carrera</servlet-name>
         <servlet-class>Controlador.controller_carrera</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>controller_ciclo</servlet-name>
+        <servlet-class>Controlador.controller_ciclo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>controller_oferta</servlet-name>
+        <servlet-class>Controlador.controller_oferta</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>controller_grupos</servlet-name>
+        <servlet-class>Controlador.controller_grupos</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>controller_cursos</servlet-name>
         <url-pattern>/controller_cursos</url-pattern>
@@ -39,6 +51,18 @@
     <servlet-mapping>
         <servlet-name>controller_carrera</servlet-name>
         <url-pattern>/controller_carrera</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>controller_ciclo</servlet-name>
+        <url-pattern>/controller_ciclo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>controller_oferta</servlet-name>
+        <url-pattern>/controller_oferta</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>controller_grupos</servlet-name>
+        <url-pattern>/controller_grupos</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
