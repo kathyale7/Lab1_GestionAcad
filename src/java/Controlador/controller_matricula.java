@@ -93,6 +93,22 @@ public class controller_matricula extends HttpServlet {
            
            request.getRequestDispatcher("historial.jsp").forward(request, response);
 
+
+        } else if (action.equalsIgnoreCase("mi_historial")) {
+            int nombre = Integer.parseInt(request.getParameter("id_alumno"));
+
+
+            try {
+                matricula_historial = (List<matricula>) mDao.buscarMatricula_id(nombre);
+
+                request.setAttribute("HistorialAlumno", matricula_historial);
+            } catch (GlobalException | NoDataException ex) {
+                Logger.getLogger(controller_cursos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+           
+           
+           request.getRequestDispatcher("historial_propio.jsp").forward(request, response);
+
         }
     }
 

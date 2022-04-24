@@ -243,6 +243,57 @@ public class ServiceProfesor extends Service {
         return coleccion;
     }
 
+    public profesor buscarProfesor_id_(int id) throws GlobalException, NoDataException {
+
+        try {
+            conectar();
+        } catch (ClassNotFoundException e) {
+            throw new GlobalException("No se ha localizado el driver");
+        } catch (SQLException e) {
+            throw new NoDataException("La base de datos no se encuentra disponible");
+        }
+        ResultSet rs = null;
+        ArrayList coleccion = new ArrayList();
+        profesor eProfesor = null;
+        CallableStatement pstmt = null;
+        try {
+            pstmt = conexion.prepareCall(buscarProfesor_id);
+            pstmt.registerOutParameter(1, OracleTypes.CURSOR);
+            pstmt.setInt(2, id);
+            pstmt.execute();
+            rs = (ResultSet) pstmt.getObject(1);
+            while (rs.next()) {
+                eProfesor = new profesor(rs.getInt("cedula"),
+                        rs.getString("usuario_id"),
+                        rs.getString("nombre"),
+                        rs.getString("telefono"),
+                        rs.getString("email"),
+                        rs.getString("fecha_nacimiento"));
+                coleccion.add(eProfesor);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            throw new GlobalException("Sentencia no valida");
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                desconectar();
+            } catch (SQLException e) {
+                throw new GlobalException("Estatutos invalidos o nulos");
+            }
+        }
+        if (coleccion == null || coleccion.size() == 0) {
+            throw new NoDataException("No hay datos");
+        }
+        return eProfesor;
+    }
+
     public Collection buscarProfesor__nombre(String nombre) throws GlobalException, NoDataException {
 
         try {

@@ -60,7 +60,7 @@
                 </tbody>
 			</table>
 		
-<a href="mantenimientoalumnos?accion=ver">Volver...</a>
+<a href="inicioestudiantes.jsp">Volver...</a>
 		
 	</body>
 </html>
