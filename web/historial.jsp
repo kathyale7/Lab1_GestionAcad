@@ -12,34 +12,36 @@
 <!DOCTYPE html>
 <html>
     <head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Historial</title>
-		<link rel="stylesheet" type="text/css" href="estilo.css">
-	</head>
-	<body background="green">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Historial</title>
+        <link rel="stylesheet" type="text/css" href="estilo.css">
+    </head>
+    <body background="green">
 
-		<div class="topnav">
-			<a href="mantenimientoalumnos?accion=ver">Inicio</a>
-			<a href="index.html">Cerrar Sesion</a>
-		</div>
+        <div class="topnav">
+            <a href="mantenimientoalumnos?accion=ver">Inicio</a>
+            <a href="index.html">Cerrar Sesion</a>
+        </div>
 
-		<div class="tablaCursos">
-			<table>
-                            <thead>
-				<tr>
-				<th>Cedula</th>
-				<th>Curso</th>
-				<th>Grupo</th>
-				<th>Estado</th>
-                                <th>Nota</th>
-				</tr>
-                                </thead>
-                                <%
+        <div class="tablaCursos">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cedula</th>
+                        <th>Curso</th>
+                        <th>Grupo</th>
+                        <th>Estado</th>
+                        <th>Nota</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <%
                     List<matricula> historial = (List<matricula>) request.getAttribute("HistorialAlumno");
                     Iterator<matricula> iter;
                     iter = historial.iterator();
                     matricula m = null;
+                    int alumno = 0;
                     while (iter.hasNext()) {
 
                         m = iter.next();
@@ -55,12 +57,17 @@
                         <td><%=m.getEstado()%></td>
                         <td><%=m.getNota()%></td>
 
+                        <td>
+                            <a class=Opciones href="#">Eliminar Matricula</a>
+                        </td>
+                        <%}%>
                     </tr>
-                    <%}%>
+
                 </tbody>
-			</table>
-		
-<a href="mantenimientoalumnos?accion=ver">Volver...</a>
-		
-	</body>
+            </table>
+            <a href="historial_alumno?accion=nueva_matricula&alumno=<%=m.getAlumno_id()%>">Matricular nuevo curso</a>
+            <div class="space"></div>
+            <a href="mantenimientoalumnos?accion=ver">Volver...</a>
+
+    </body>
 </html>

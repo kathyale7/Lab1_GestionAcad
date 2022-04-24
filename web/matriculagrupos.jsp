@@ -1,6 +1,6 @@
 <%-- 
-    Document   : historial
-    Created on : 22 abr. 2022, 21:15:22
+    Document   : matriculagrupos
+    Created on : 24 abr. 2022, 16:38:09
     Author     : ksand
 --%>
 
@@ -14,13 +14,13 @@
     <head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Historial</title>
+		<title>Estudiantes por grupo</title>
 		<link rel="stylesheet" type="text/css" href="estilo.css">
 	</head>
 	<body background="green">
 
 		<div class="topnav">
-			<a href="inicioestudiantes.jsp">Inicio</a>
+			<a href="inicioprofesores.jsp">Inicio</a>
 			<a href="index.jsp">Cerrar Sesion</a>
 		</div>
 
@@ -33,6 +33,7 @@
 				<th>Grupo</th>
 				<th>Estado</th>
                                 <th>Nota</th>
+                                <th>Acciones</th>
 				</tr>
                                 </thead>
                                 <%
@@ -54,13 +55,16 @@
                         <td><%=m.getGrupo_num()%></td>
                         <td><%=m.getEstado()%></td>
                         <td><%=m.getNota()%></td>
+                       <td>
+                           <a href="historial_alumno?accion=notas&cedula=<%=m.getAlumno_id()%>&curso=<%=m.getCurso_id()%>&grupo=<%=m.getGrupo_num()%>&estado=<%=m.getEstado()%>">Cambiar nota</a>
+                        </td>
 
                     </tr>
                     <%}%>
                 </tbody>
 			</table>
 		
-<a href="inicioestudiantes.jsp">Volver...</a>
+
 		
 	</body>
 </html>

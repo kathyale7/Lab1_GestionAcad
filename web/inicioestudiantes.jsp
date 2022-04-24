@@ -20,7 +20,7 @@
     <body background="green">
 
         <div class="topnav">
-            <%int id = 109381291;%>
+             <%int id = 109381291;%>
             <a href="historial_alumno?accion=mi_historial&id_alumno=<%=id%>">Consulta historial</a>
             <a href="index.jsp">Cerrar Sesion</a>
         </div>

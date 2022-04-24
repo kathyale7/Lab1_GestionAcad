@@ -1,12 +1,12 @@
 <%-- 
-    Document   : mantenimientogrupos
-    Created on : 23 abr. 2022, 22:34:15
+    Document   : gruposfiltrados
+    Created on : 24 abr. 2022, 16:47:14
     Author     : ksand
 --%>
 
 <%@page import="java.util.Iterator"%>
 <%@page import="Logica.grupo"%>
-<%@page import="java.util.List"%>
+<%@page import="Logica.grupo"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -20,7 +20,7 @@
     <body background="green">
 
         <div class="topnav">
-            <a href="inicioadmin.html">Inicio</a>
+            <a href="inicioprofesores.jsp">Inicio</a>
             <a href="index.jsp">Cerrar Sesion</a>
         </div>
 
@@ -59,7 +59,7 @@
                         <td><%=m.getHORARIO()%></td>
                         <td><%=m.getPROFESOR_ID()%></td>
                         <td> 
-                            <a class=Opciones href=#>Modificar</a>
+                            <a class=Opciones href=historial_alumno?accion=matricula_grupo&num_grupo=<%=m.getCODIGO()%>>Ver estudiantes</a>
 
                         </td>
                     </tr>
@@ -68,7 +68,6 @@
                 </tbody>
             </table>
 
-            <a href="ofertaacademica?accion=ver">Volver...</a>
-
+      
     </body>
 </html>

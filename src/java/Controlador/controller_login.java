@@ -44,8 +44,9 @@ public class controller_login extends HttpServlet {
      */
     model_usuario model;
     ServiceLogin uDao = new ServiceLogin();
-ServiceProfesor pDao = new ServiceProfesor();
+    ServiceProfesor pDao = new ServiceProfesor();
     ServiceAlumno aDao = new ServiceAlumno();
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -53,7 +54,7 @@ ServiceProfesor pDao = new ServiceProfesor();
         String respuesta = "index.jsp";
         String cedula_request = request.getParameter("user");
         String contrasena_request = request.getParameter("contrasena");
-        
+
         try {
             usuario u = uDao.login(new usuario(cedula_request, 1, contrasena_request));
 
@@ -77,6 +78,7 @@ ServiceProfesor pDao = new ServiceProfesor();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         processRequest(request, response);
     }
 
@@ -118,17 +120,17 @@ ServiceProfesor pDao = new ServiceProfesor();
                 profesor p = pDao.buscarProfesor_id_(Integer.parseInt(u.getUSUARIO_ID()));
                 System.out.println(p.getNombre());
                 session.setAttribute("profesor", p);
-                respuesta = "inicioprofesores.html";
+                respuesta = "inicioprofesores.jsp";
             } catch (Exception ex) {
                 Logger.getLogger(controller_login.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         if (u.getROL_ID() == 4) {
+           
             try {
                 alumno e = aDao.buscarAlumno_id_(Integer.parseInt(u.getUSUARIO_ID()));
-                session.setAttribute("Estudiante", e);
-                
-                request.setAttribute("id_edit", request.getParameter(e.getUsuario_id()));
+//                session.setAttribute("Estudiante", e);
+ request.setAttribute("id_edit", request.getParameter(u.getUSUARIO_ID()));
                 respuesta = "inicioestudiantes.jsp";
             } catch (Exception ex) {
                 Logger.getLogger(controller_login.class.getName()).log(Level.SEVERE, null, ex);

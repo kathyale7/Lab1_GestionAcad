@@ -119,6 +119,20 @@ public class controller_grupos extends HttpServlet {
             }
            
             request.getRequestDispatcher("mantenimientogrupo?accion=Buscar_grupos&id_curso="+curso).forward(request, response);
+        } else if (action.equalsIgnoreCase("gruposprofe")) {
+           
+
+
+            try {
+                grupos_oferta = (List<grupo>) gDao.buscarCurso_Profesor(200, 402381288);
+
+                request.setAttribute("ListaGrupos", grupos_oferta);
+            } catch (GlobalException | NoDataException ex) {
+                Logger.getLogger(controller_cursos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+           
+           request.getRequestDispatcher("gruposfiltrados.jsp").forward(request, response);
+
         }
     }
 

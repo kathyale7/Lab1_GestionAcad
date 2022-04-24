@@ -42,6 +42,7 @@ public class controller_matricula extends HttpServlet {
     
    
     ServiceMatricula mDao = new ServiceMatricula();
+    matricula m = new matricula();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -109,6 +110,105 @@ public class controller_matricula extends HttpServlet {
            
            request.getRequestDispatcher("historial_propio.jsp").forward(request, response);
 
+        } else if (action.equalsIgnoreCase("nueva_matricula")) {
+             request.setAttribute("id_edit", request.getParameter("alumno"));
+
+            
+
+            request.getRequestDispatcher("nuevamatricula.jsp").forward(request, response);
+
+        } else if (action.equalsIgnoreCase("Agregar")) {
+//            request.setAttribute("id_edit", request.getParameter("id_curso"));
+
+            int alumno_id = Integer.parseInt(request.getParameter("alumno_id"));
+            int curso_id = Integer.parseInt(request.getParameter("curso_id"));
+            int num_grupo = Integer.parseInt(request.getParameter("num_grupo"));
+            int estado = Integer.parseInt(request.getParameter("estado"));
+            int nota = Integer.parseInt(request.getParameter("nota"));
+           
+
+            m.setAlumno_id(alumno_id);
+            m.setCurso_id(curso_id);
+            m.setGrupo_num(num_grupo);
+            m.setEstado(estado);
+            m.setNota(nota);
+            try {
+
+                mDao.insertarMatricula(m);
+
+            } catch (GlobalException | NoDataException e) {
+            }
+           
+            request.getRequestDispatcher("historial_alumno?accion=Buscar_alumno&id_alumno="+alumno_id).forward(request, response);
+        } else if (action.equalsIgnoreCase("eliminar")) {
+            int alumno_id = Integer.parseInt(request.getParameter("alumno_id"));
+            int curso_id = Integer.parseInt(request.getParameter("curso_id"));
+            int num_grupo = Integer.parseInt(request.getParameter("num_grupo"));
+
+            try {
+                mDao.eliminarMatricula(alumno_id, num_grupo, curso_id);
+//                cursos_oferta = (List<curso>) cDao.listarCurso();
+//                request.setAttribute("ListaCursos", cursos_oferta);
+            } catch (GlobalException | NoDataException  ex) {
+                Logger.getLogger(controller_cursos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            request.getRequestDispatcher("historial_alumno?accion=Buscar_alumno&id_alumno="+alumno_id).forward(request, response);
+        
+        } else if (action.equalsIgnoreCase("matricula_grupo")) {
+            
+            int num_grupo = Integer.parseInt(request.getParameter("num_grupo"));
+
+            try {
+                 matricula_historial = (List<matricula>) mDao.buscarMatricula_grupo(num_grupo);
+
+                request.setAttribute("HistorialAlumno", matricula_historial);
+            } catch (GlobalException | NoDataException ex) {
+                Logger.getLogger(controller_cursos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+           
+           
+           request.getRequestDispatcher("matriculagrupos.jsp").forward(request, response);
+        } else if (action.equalsIgnoreCase("notas")) {
+             request.setAttribute("cedula", request.getParameter("cedula"));
+             request.setAttribute("curso", request.getParameter("curso"));
+             request.setAttribute("grupo", request.getParameter("grupo"));
+             request.setAttribute("estado", request.getParameter("estado"));
+
+
+
+            request.getRequestDispatcher("registrarnotas.jsp").forward(request, response);
+
+        }  else if (action.equalsIgnoreCase("NotaNueva")) {
+//            request.setAttribute("id_edit", request.getParameter("id_curso"));
+
+            int cedula = Integer.parseInt(request.getParameter("cedula"));
+           int curso = Integer.parseInt(request.getParameter("curso"));
+           int grupo = Integer.parseInt(request.getParameter("grupo"));
+           int estado = Integer.parseInt(request.getParameter("estado"));
+           int nota = Integer.parseInt(request.getParameter("nota"));
+
+            m.setAlumno_id(cedula);
+            m.setCurso_id(curso);
+            m.setGrupo_num(grupo);
+            if (nota > 67){
+                estado = 101;
+            } else {
+                estado = 103;
+            }
+            if (nota == 0){
+                estado = 102;
+            }
+            m.setEstado(estado);
+            m.setNota(nota);
+            try {
+
+                mDao.modificarMatricula(m);
+
+            } catch (GlobalException | NoDataException e) {
+            }
+           
+            request.getRequestDispatcher("historial_alumno?accion=matricula_grupo&num_grupo="+grupo).forward(request, response);
         }
     }
 
