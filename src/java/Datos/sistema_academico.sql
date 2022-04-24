@@ -100,10 +100,22 @@ AS
         carrera_cursor types.ref_cursor; 
 BEGIN 
   OPEN carrera_cursor FOR 
-       SELECT codigo,nombre,titulo FROM carrera WHERE codigo=idbuscar; 
+       SELECT codigo, nombre, titulo FROM carrera WHERE codigo=idbuscar; 
 RETURN carrera_cursor; 
 END;
 /
+
+CREATE OR REPLACE FUNCTION BUSCAR_CARRERA_Nombre(idbuscar IN CARRERA.NOMBRE%TYPE)
+RETURN Types.ref_cursor 
+AS 
+        carrera_cursor types.ref_cursor; 
+BEGIN 
+  OPEN carrera_cursor FOR 
+       SELECT codigo, nombre, titulo FROM carrera WHERE nombre=idbuscar; 
+RETURN carrera_cursor; 
+END;
+/
+
 ---LISTAR
 CREATE OR REPLACE FUNCTION LISTAR_CARRERA
 RETURN Types.ref_cursor 

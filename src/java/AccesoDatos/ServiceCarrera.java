@@ -22,6 +22,7 @@ public class ServiceCarrera extends Service {
     private static final String insertarCarrera = "{call INSERTAR_CARRERA (?, ?, ?)}";
     private static final String listarCarrera = "{?=call LISTAR_CARRERA ()}";
     private static final String buscarCarrera = "{?=call BUSCAR_CARRERA (?)}";
+    private static final String buscarCarrera_Nombre = "{?=call BUSCAR_CARRERA_Nombre (?)}";
     private static final String modificarCarrera = "{call MODIFICAR_CARRERA (?, ?, ?)}";
     private static final String eliminarCarrera = "{call ELIMINAR_CARRERA (?)}";
 
@@ -183,7 +184,7 @@ public class ServiceCarrera extends Service {
         }
     }
 
-    public carrera buscarCarrera(int id) throws GlobalException, NoDataException {
+    public Collection buscarCarrera(int id) throws GlobalException, NoDataException {
 
         try {
             conectar();
@@ -203,7 +204,7 @@ public class ServiceCarrera extends Service {
             pstmt.execute();
             rs = (ResultSet) pstmt.getObject(1);
             while (rs.next()) {
-                eCarrera = new carrera(rs.getInt("id"),
+                eCarrera = new carrera(rs.getInt("codigo"),
                         rs.getString("nombre"),
                         rs.getString("titulo"));
                 coleccion.add(eCarrera);
@@ -228,7 +229,55 @@ public class ServiceCarrera extends Service {
         if (coleccion == null || coleccion.size() == 0) {
             throw new NoDataException("No hay datos");
         }
-        return eCarrera;
+        return coleccion;
+    }
+    
+    public Collection buscarCarrera_nombre(String id) throws GlobalException, NoDataException {
+
+        try {
+            conectar();
+        } catch (ClassNotFoundException e) {
+            throw new GlobalException("No se ha localizado el driver");
+        } catch (SQLException e) {
+            throw new NoDataException("La base de datos no se encuentra disponible");
+        }
+        ResultSet rs = null;
+        ArrayList coleccion = new ArrayList();
+        carrera eCarrera = null;
+        CallableStatement pstmt = null;
+        try {
+            pstmt = conexion.prepareCall(buscarCarrera_Nombre);
+            pstmt.registerOutParameter(1, OracleTypes.CURSOR);
+            pstmt.setString(2, id);
+            pstmt.execute();
+            rs = (ResultSet) pstmt.getObject(1);
+            while (rs.next()) {
+                eCarrera = new carrera(rs.getInt("codigo"),
+                        rs.getString("nombre"),
+                        rs.getString("titulo"));
+                coleccion.add(eCarrera);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            throw new GlobalException("Sentencia no valida");
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                desconectar();
+            } catch (SQLException e) {
+                throw new GlobalException("Estatutos invalidos o nulos");
+            }
+        }
+        if (coleccion == null || coleccion.size() == 0) {
+            throw new NoDataException("No hay datos");
+        }
+        return coleccion;
     }
 
 }

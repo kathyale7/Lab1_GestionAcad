@@ -41,6 +41,7 @@ public class controller_cursos extends HttpServlet {
      */
     model_curso model;
     ServiceCurso cDao = new ServiceCurso();
+    curso c = new curso();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -139,8 +140,6 @@ public class controller_cursos extends HttpServlet {
 
         } else if (action.equalsIgnoreCase("Buscar_n")) {
 
-    
-
             String nombre = request.getParameter("buscar");
 //            int codigo = Integer.parseInt(request.getParameter("codigo"));
 //            String carrera = request.getParameter("carrera");
@@ -153,12 +152,11 @@ public class controller_cursos extends HttpServlet {
             } catch (GlobalException | NoDataException ex) {
                 Logger.getLogger(controller_cursos.class.getName()).log(Level.SEVERE, null, ex);
             }
-           
-           request.getRequestDispatcher("listarcursos.jsp").forward(request, response);
 
-        }else if (action.equalsIgnoreCase("Buscar_c")) {
+            request.getRequestDispatcher("listarcursos.jsp").forward(request, response);
 
-    
+        } else if (action.equalsIgnoreCase("Buscar_c")) {
+
             int codigo = Integer.parseInt(request.getParameter("codigo"));
 
             try {
@@ -166,20 +164,14 @@ public class controller_cursos extends HttpServlet {
 
                 request.setAttribute("ListaCursos", cursos_oferta);
             } catch (GlobalException | NoDataException ex) {
-                
+
                 Logger.getLogger(controller_cursos.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-           
-           request.getRequestDispatcher("listarcursos.jsp").forward(request, response);
 
-        }
-        else if (action.equalsIgnoreCase("Buscar_ca")) {
+            request.getRequestDispatcher("listarcursos.jsp").forward(request, response);
 
-    
+        } else if (action.equalsIgnoreCase("Buscar_ca")) {
 
-         
-        
             int carrera = Integer.parseInt(request.getParameter("carrera"));
 
             try {
@@ -189,9 +181,62 @@ public class controller_cursos extends HttpServlet {
             } catch (GlobalException | NoDataException ex) {
                 Logger.getLogger(controller_cursos.class.getName()).log(Level.SEVERE, null, ex);
             }
-           
-           request.getRequestDispatcher("listarcursos.jsp").forward(request, response);
 
+            request.getRequestDispatcher("listarcursos.jsp").forward(request, response);
+
+        } else if (action.equalsIgnoreCase("curso-carrera")) {
+             request.setAttribute("id_edit", request.getParameter("carrera"));
+
+            int carrera = Integer.parseInt(request.getParameter("carrera"));
+
+            try {
+                cursos_oferta = (List<curso>) cDao.buscarCurso_carrera(carrera);
+
+                request.setAttribute("ListaCursos", cursos_oferta);
+            } catch (GlobalException | NoDataException ex) {
+                Logger.getLogger(controller_cursos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            request.getRequestDispatcher("cursosxcarrera.jsp").forward(request, response);
+
+        } else if (action.equalsIgnoreCase("eliminar")) {
+            int id_curso = Integer.parseInt(request.getParameter("id_curso"));
+            int id_carrera = Integer.parseInt(request.getParameter("id_carrera"));
+            c.setCiclo_id(id_curso);
+            try {
+                cDao.eliminarCurso(id_curso);
+//                cursos_oferta = (List<curso>) cDao.listarCurso();
+//                request.setAttribute("ListaCursos", cursos_oferta);
+            } catch (GlobalException | NoDataException  ex) {
+                Logger.getLogger(controller_cursos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            request.getRequestDispatcher("mantenimientocurso?accion=curso-carrera&carrera="+id_carrera).forward(request, response);
+        
+        } else if (action.equalsIgnoreCase("Agregar")) {
+//            request.setAttribute("id_edit", request.getParameter("id_curso"));
+
+            int codigo = Integer.parseInt(request.getParameter("codigo"));
+            String curso = request.getParameter("curso");
+            int creditos = Integer.parseInt(request.getParameter("creditos"));
+            int horassemanales = Integer.parseInt(request.getParameter("horassemanales"));
+            int carrera = Integer.parseInt(request.getParameter("carrera"));
+            int ciclo = Integer.parseInt(request.getParameter("ciclo"));
+
+            c.setCodigo(codigo);
+            c.setNombre(curso);
+            c.setCreditos(creditos);
+            c.setHoras_semanales(horassemanales);
+            c.setCarrera_id(carrera);
+            c.setCiclo_id(ciclo);
+            try {
+
+                cDao.insertarCurso(c);
+
+            } catch (GlobalException | NoDataException e) {
+            }
+           
+            request.getRequestDispatcher("mantenimientocurso?accion=curso-carrera&carrera="+carrera).forward(request, response);
         }
     }
 

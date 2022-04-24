@@ -71,7 +71,6 @@
                         <th>Horas Semanales</th>
                         <th>Carrera</th>
                         <th>Ciclo</th>
-                        <th>Acciones</th>
 
                     </tr>
                 </thead>
@@ -96,10 +95,7 @@
                         <td><%=m.getCarrera_id()%></td>
                         <td><%=m.getCiclo_id()%></td>
 
-                        <td> 
-                            <a class=Opciones href=#>Agregar grupo</a>
-                            <a class=Opciones href=#>Ver grupos</a>
-                        </td>
+                        
                     </tr>
                     <%}%>
                 </tbody>
