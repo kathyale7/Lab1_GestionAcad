@@ -103,6 +103,8 @@
                     <%}%>
                 </tbody>
             </table>
-            <a href="mantenimientocarrera?accion=ver">Volver...</a>
+            <div class="NuevaBusqueda">
+                <a href="mantenimientocarrera?accion=ver">Volver...</a>
+            </div>
         </div>
 </html>

@@ -24,7 +24,7 @@
             <a href="index.jsp">Cerrar Sesion</a>
         </div>
 
-        <div class="tablaCursos">
+        <div class="tablaCursos3">
             <table>
                 <thead>
                     <tr>

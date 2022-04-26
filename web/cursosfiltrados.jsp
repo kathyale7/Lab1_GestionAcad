@@ -79,8 +79,7 @@
                     <%}%>
                 </tbody>
             </table>
-            <div class="">
-
+            <div class="NuevaBusqueda">
                 <a href="ofertaacademica?accion=ver">Nueva busqueda</a>
             </div>
         </div>

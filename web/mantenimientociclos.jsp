@@ -2,6 +2,7 @@
     Document   : mantenimientociclos
     Created on : 23 abr. 2022, 18:14:15
     Author     : ksand
+                 Rolando
 --%>
 
 <%@page import="java.util.Iterator"%>
@@ -24,7 +25,7 @@
 			<a href="index.html">Cerrar Sesion</a>
 		</div>
 
-		<div class="center2">
+		<div class="center8">
 
 			<div class="space"></div>
 
@@ -39,7 +40,7 @@
 
                 </form>
 
-			<div>
+			<div class="NuevaBusqueda">
 				
 				<a href="mantenimientociclo?accion=ver">Listar todos los ciclos</a>	
 			</div>
@@ -47,7 +48,7 @@
 			
 
 		</div>
-		<div class="tablaCursos2">
+		<div class="tablaCursos5">
 			<table>
                             <thead>
 				<tr>

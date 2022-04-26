@@ -2,6 +2,7 @@
     Document   : matriculagrupos
     Created on : 24 abr. 2022, 16:38:09
     Author     : ksand
+                 Rolando
 --%>
 
 <%@page import="java.util.Iterator"%>
@@ -24,7 +25,7 @@
 			<a href="index.jsp">Cerrar Sesion</a>
 		</div>
 
-		<div class="tablaCursos">
+		<div class="tablaCursos7">
 			<table>
                             <thead>
 				<tr>

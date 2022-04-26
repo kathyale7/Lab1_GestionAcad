@@ -24,7 +24,7 @@
             <a href="index.html">Cerrar Sesion</a>
         </div>
 
-        <div class="tablaCursos">
+        <div class="tablaCursos4">
             <table>
                 <thead>
                     <tr>
@@ -65,9 +65,13 @@
 
                 </tbody>
             </table>
-            <a href="historial_alumno?accion=nueva_matricula&alumno=<%=m.getAlumno_id()%>">Matricular nuevo curso</a>
-            <div class="space"></div>
-            <a href="mantenimientoalumnos?accion=ver">Volver...</a>
+            <div class="NuevaBusqueda">
+                <a href="historial_alumno?accion=nueva_matricula&alumno=<%=m.getAlumno_id()%>">Matricular nuevo curso</a>
+            </div>
+                <div class="space"></div>
+            <div class="NuevaBusqueda">
+                <a href="mantenimientoalumnos?accion=ver">Volver...</a>
+            </div>
 
     </body>
 </html>

@@ -2,6 +2,7 @@
     Document   : nuevamatricula
     Created on : 24 abr. 2022, 15:40:00
     Author     : ksand
+                 rolan
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -19,7 +20,7 @@
             <a href="inicioadmin.html">Inicio</a>
             <a href="index.html">Cerrar Sesion</a>
         </div>
-        <div class="center2">
+        <div class="center10">
 
             <div class="space"></div>
 
@@ -49,3 +50,4 @@
         </div>
     </body>
 </html>
+

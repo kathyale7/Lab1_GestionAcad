@@ -18,7 +18,7 @@ body{
 	border-radius: 10px;
 	text-align: center;
 	width: 300px;
-	height: 250px;
+	height: 290px;
 	
 }
 
@@ -27,14 +27,14 @@ body{
 	position: absolute;
 	background: #F1F3F6;
 	color: rgb(var(--color));
-	left: 30%;
+	left: 15%;
 	top: 50%;
 	transform: translate(-50%, -50%);
 	padding: 10px;
 	border-radius: 10px;
 	text-align: center;
 	width: 300px;
-	height: 300px;
+	height: 500px;
 	
 }
 
@@ -70,7 +70,87 @@ body{
 	
 }
 
-.tablaCursos{
+.center5{
+	font-size: large;
+	position: absolute;
+	background: #F1F3F6;
+	color: rgb(var(--color));
+	left: 50%;
+	top: 100%;
+	transform: translate(-50%, -50%);
+	padding: 10px;
+	border-radius: 10px;
+	text-align: center;
+	width: 1360px;
+	height: 500px;
+	
+}
+
+.center6{
+	font-size: large;
+	position: absolute;
+	background: #F1F3F6;
+	color: rgb(var(--color));
+	left: 50%;
+	top: 40%;
+	transform: translate(-50%, -50%);
+	padding: 10px;
+	border-radius: 10px;
+	text-align: center;
+	width: 350px;
+	height: 320px;
+	
+}
+
+.center7{
+	font-size: large;
+	position: absolute;
+	background: #F1F3F6;
+	color: rgb(var(--color));
+	left: 50%;
+	top: 43%;
+	transform: translate(-50%, -50%);
+	padding: 10px;
+	border-radius: 10px;
+	text-align: center;
+	width: 300px;
+	height: 350px;
+	
+}
+
+.center8{
+	font-size: large;
+	position: absolute;
+	background: #F1F3F6;
+	color: rgb(var(--color));
+	left: 50%;
+	top: 43%;
+	transform: translate(-50%, -50%);
+	padding: 10px;
+	border-radius: 10px;
+	text-align: center;
+	width: 300px;
+	height: 300px;
+	
+}
+
+.center9{
+	font-size: large;
+	position: absolute;
+	background: #F1F3F6;
+	color: rgb(var(--color));
+	left: 50%;
+	top: 43%;
+	transform: translate(-50%, -50%);
+	padding: 10px;
+	border-radius: 10px;
+	text-align: center;
+	width: 300px;
+	height: 300px;
+	
+}
+
+.center10{
 	font-size: large;
 	position: absolute;
 	background: #F1F3F6;
@@ -82,16 +162,97 @@ body{
 	border-radius: 10px;
 	text-align: center;
 	width: 500px;
-	height: 370px;
+	height: 500px;
 	
 }
+
+.center11{
+	font-size: large;
+	position: absolute;
+	background: #F1F3F6;
+	color: rgb(var(--color));
+	left: 50%;
+	top: 60%;
+	transform: translate(-50%, -50%);
+	padding: 10px;
+	border-radius: 10px;
+	text-align: center;
+	width: 500px;
+	height: 700px;
+	
+}
+
+.center12{
+	font-size: large;
+	position: absolute;
+	background: #F1F3F6;
+	color: rgb(var(--color));
+	left: 50%;
+	top: 60%;
+	transform: translate(-50%, -50%);
+	padding: 10px;
+	border-radius: 10px;
+	text-align: center;
+	width: 500px;
+	height: 550px;
+	
+}
+
+.tablaCursos{
+	font-size: large;
+	position: absolute;
+	background: #F1F3F6;
+	color: rgb(var(--color));
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	padding: 10px;
+	border-radius: 10px;
+	text-align: center;
+	width: 1100px;
+	height: 500px;
+	
+}
+
+.tablaCursos3{
+	font-size: large;
+	position: absolute;
+	background: #F1F3F6;
+	color: rgb(var(--color));
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	padding: 10px;
+	border-radius: 10px;
+	text-align: center;
+	width: 1500px;
+	height: 500px;
+	
+}
+
+.tablaCursos4{
+	font-size: large;
+	position: absolute;
+	background: #F1F3F6;
+	color: rgb(var(--color));
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	padding: 10px;
+	border-radius: 10px;
+	text-align: center;
+	width: 1200px;
+	height: 500px;
+	
+}
+
 
 .buscarCarrera{
 	font-size: large;
 	position: absolute;
 	background: #F1F3F6;
 	color: rgb(var(--color));
-	left: 15%;
+	left: 25%;
 	top: 50%;
 	transform: translate(-50%, -50%);
 	padding: 10px;
@@ -102,19 +263,85 @@ body{
 	
 }
 
-.tablaCursos2{
+.buscarCarrera2{
 	font-size: large;
 	position: absolute;
 	background: #F1F3F6;
 	color: rgb(var(--color));
-	left: 80%;
+	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
 	padding: 10px;
 	border-radius: 10px;
 	text-align: center;
-	width: 500px;
-	height: 370px;
+	width: 600px;
+	height: 400px;
+	
+}
+
+.tablaCursos2{
+	font-size: large;
+	position: absolute;
+	background: #F1F3F6;
+	color: rgb(var(--color));
+	left: 62%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	padding: 10px;
+	border-radius: 10px;
+	text-align: center;
+	width: 1010px;
+	height: 500px;
+	
+}
+
+
+
+.tablaCursos5{
+	font-size: large;
+	position: absolute;
+	background: #F1F3F6;
+	color: rgb(var(--color));
+	left: 50%;
+	top: 100%;
+	transform: translate(-50%, -50%);
+	padding: 10px;
+	border-radius: 10px;
+	text-align: center;
+	width: 1250px;
+	height: 500px;
+	
+}
+
+.tablaCursos6{
+	font-size: large;
+	position: absolute;
+	background: #F1F3F6;
+	color: rgb(var(--color));
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	padding: 10px;
+	border-radius: 10px;
+	text-align: center;
+	width: 1450px;
+	height: 500px;
+	
+}
+
+.tablaCursos7{
+	font-size: large;
+	position: absolute;
+	background: #F1F3F6;
+	color: rgb(var(--color));
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	padding: 10px;
+	border-radius: 10px;
+	text-align: center;
+	width: 1200px;
+	height: 500px;
 	
 }
 
@@ -139,13 +366,13 @@ body{
 	position: absolute;
 	background: #F1F3F6;
 	color: rgb(var(--color));
-	left: 45%;
+	left: 65%;
 	top: 50%;
 	transform: translate(-50%, -50%);
 	padding: 10px;
 	border-radius: 10px;
 	text-align: center;
-	width: 350px;
+	width: 700px;
 	height: 370px;
 }
 
@@ -154,19 +381,77 @@ body{
 	position: absolute;
 	background: #F1F3F6;
 	color: rgb(var(--color));
-	left: 65%;
-	top: 50%;
+	left: 50%;
+	top: 100%;
 	transform: translate(-50%, -50%);
 	padding: 10px;
 	border-radius: 10px;
 	text-align: center;
-	width: 350px;
-	height: 300px;
+	width: 1450px;
+	height: 400px;
 }
+
+.tablaProfesores2{
+	font-size: large;
+	position: absolute;
+	background: #F1F3F6;
+	color: rgb(var(--color));
+	left: 50%;
+	top: 100%;
+	transform: translate(-50%, -50%);
+	padding: 10px;
+	border-radius: 10px;
+	text-align: center;
+	width: 1200px;
+	height: 400px;
+}
+
 .space{
 	width: 21px;
 	height: 30px;
 }
+
+.campoboton{
+	display: inline-flex;
+
+}
+
+.campoboton form{
+	display: inline-flex;
+}
+.campoboton button{
+	display: inline-block;
+	background-color: #8A2BE2;
+	color: white;
+	padding: 14px 20px;
+	margin: 8px 0;
+	border: none;
+	cursor: pointer;
+	width: 100%;
+	border-radius: 10px;
+	font-size: large;
+	width: 100px;
+}
+
+
+
+.campoboton2 form{
+	display: inline-flex;
+}
+.campoboton2 button{
+	display: inline-block;
+	background-color: #8A2BE2;
+	color: white;
+	padding: 14px 20px;
+	margin: 8px 0;
+	border: none;
+	cursor: pointer;
+	width: 100%;
+	border-radius: 10px;
+	font-size: large;
+	width: 100px;
+}
+
 
 button {
 	background-color: #8A2BE2;
@@ -247,11 +532,26 @@ input[type=text], input[type=password], input[type=number]  {
   }
   
 
-  .topnav a:hover {
+  .NuevaBusqueda a:hover {
 	background-color: #ddd;
 	color: black;
   }
   
+  .NuevaBusqueda a {
+	color: #8A2BE2;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-size: 17px;
+	left: 50%;
+	
+  }
+  
+
+  .topnav a:hover {
+	background-color: #ddd;
+	color: black;
+  }
 
   .topnav a.active {
 	background-color: #04AA6D;

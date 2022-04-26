@@ -60,7 +60,9 @@
                 </tbody>
 			</table>
 		
-<a href="inicioestudiantes.jsp">Volver...</a>
+            <div class="NuevaBusqueda">
+                <a href="inicioestudiantes.jsp">Volver...</a>
+            </div>
 		
 	</body>
 </html>

@@ -1,7 +1,8 @@
 <%-- 
     Document   : mantenimientoalumnos
     Created on : 22 abr. 2022, 09:51:03
-    Author     : ksand
+    Author     : ksand 
+                 rolan
 --%>
 
 <%@page import="java.util.Iterator"%>
@@ -23,7 +24,7 @@
             <a href="index.html">Cerrar Sesion</a>
         </div>
 
-        <div class="center2">
+        <div class="center7">
 
             <div class="space"></div>
 
@@ -31,7 +32,7 @@
 
             <div class="space"></div>
 
-            <div>
+            <div class="campoboton">
                 <form action="mantenimientoalumnos">
 
                     <input type="text" name="buscar" placeholder="Nombre" required>
@@ -39,7 +40,7 @@
 
                 </form>
             </div>
-            <div>
+            <div class="campoboton">
                 <form action="mantenimientoalumnos">
 
                     <input type="text" name="codigo" placeholder="Cédula" required>
@@ -47,7 +48,7 @@
 
                 </form>
             </div>
-            <div>
+            <div class="campoboton2">
                 <form action="mantenimientoalumnos">
                     
                     <input type="text" name="carrera" placeholder="Carrera" required>
@@ -56,7 +57,9 @@
                     
 
                 </form>
-                <a href="mantenimientoalumnos?accion=ver">Listar todos los alumnos</a>	
+                <div class="NuevaBusqueda">
+                    <a href="mantenimientoalumnos?accion=ver">Listar todos los alumnos</a>	
+                </div>
             </div>
 
 
@@ -106,8 +109,5 @@
                 </tbody>
             </table>
         </div>
-
-
-
     </body>
 </html>

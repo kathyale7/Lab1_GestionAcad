@@ -2,6 +2,7 @@
     Document   : mantenimientoprofesores
     Created on : 22 abr. 2022, 06:52:59
     Author     : ksand
+                 rolan
 --%>
 
 <%@page import="java.util.Iterator"%>
@@ -23,7 +24,7 @@
 			<a href="index.html">Cerrar Sesion</a>
 		</div>
 
-		<div class="center2">
+		<div class="center9">
 
 			<div class="space"></div>
 
@@ -31,7 +32,7 @@
 
 			<div class="space"></div>
 
-			<div>
+			<div class="campoboton">
 				<form action="mantenimientoprofesor">
                     
                     <input type="text" name="buscar" placeholder="Nombre" required>
@@ -40,14 +41,17 @@
                 </form>
 			</div>
 
-			<div>
-                            <form action="mantenimientoprofesor">
+			<div class="campoboton2">
+                <form action="mantenimientoprofesor">
                     
                     <input type="text" name="codigo" placeholder="Cédula" required>
                    <button type="submit" name="accion" value="Buscar_c"> Buscar</button>
                     
                 </form>
-			 <a href="mantenimientoprofesor?accion=ver">Listar todos los profesores</a>	
+                <div class="NuevaBusqueda">
+                    <a href="mantenimientoprofesor?accion=ver">Listar todos los profesores</a>	
+                </div>
+			
 			</div>
 			
 			
@@ -55,7 +59,7 @@
 			
 
 		</div>
-		<div class="tablaProfesores">
+		<div class="tablaProfesores2">
 			<table>
                             <thead>
 				<tr>

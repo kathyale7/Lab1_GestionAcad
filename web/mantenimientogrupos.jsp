@@ -2,6 +2,7 @@
     Document   : mantenimientogrupos
     Created on : 23 abr. 2022, 22:34:15
     Author     : ksand
+                 Rolando
 --%>
 
 <%@page import="java.util.Iterator"%>
@@ -24,7 +25,7 @@
             <a href="index.jsp">Cerrar Sesion</a>
         </div>
 
-        <div class="tablaCursos">
+        <div class="tablaCursos6">
             <table>
                 <thead>
                     <tr>
@@ -67,8 +68,10 @@
 
                 </tbody>
             </table>
-
-            <a href="ofertaacademica?accion=ver">Volver...</a>
+            <div class="NuevaBusqueda">
+                <a href="ofertaacademica?accion=ver">Volver...</a>
+            </div>
+            
 
     </body>
 </html>

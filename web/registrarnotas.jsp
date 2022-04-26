@@ -2,6 +2,7 @@
     Document   : registrarnotas
     Created on : 24 abr. 2022, 16:31:05
     Author     : ksand
+                 rolan
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -19,7 +20,7 @@
             <a href="inicioprofesores.jsp">Inicio</a>
             <a href="index.jsp">Cerrar Sesion</a>
         </div>
-        <div class="center2">
+        <div class="center11">
 
             <div class="space"></div>
 

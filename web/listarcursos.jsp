@@ -24,43 +24,45 @@
             <a href="index.html">Cerrar Sesion</a>
         </div>
 
-        <div class="center2">
+        <div class="center6">
 
             <div class="space"></div>
 
             <Label>Buscar Cursos</Label>
 
             <div class="space"></div>
-<div>
+            
+            <div class="campoboton">
                 <form action="mantenimientocurso">
                     <input type="text" name="codigo" placeholder ="Codigo" required>
-                    
-                    <button type="submit" name="accion" value="Buscar_c"> Buscar</button>
+                    <button type="submit" name="accion" value="Buscar_c">Buscar</button>
                 </form>
-            </div>
-            <div>
+            </div> 
+            <div class="campoboton">
                 <form action="mantenimientocurso">
                     
                     <input type="text" name="buscar" placeholder="Nombre" required>
-                   <button type="submit" name="accion" value="Buscar_n"> Buscar</button>
+                   <button type="submit" name="accion" value="Buscar_n">Buscar</button>
                     
                 </form>
             </div>
             
 
-            <div>
+            <div class="campoboton2">
                 <form action="mantenimientocurso">
                    
                     <input type="text" name="carrera" placeholder="Carrera" required>
-                   <button type="submit" name="accion" value="Buscar_ca"> Buscar</button>
+                   <button type="submit" name="accion" value="Buscar_ca">Buscar</button>
                 </form>
-                <a href="mantenimientocurso?accion=ver">Listar todos los cursos</a>
+                <div class="NuevaBusqueda">
+                    <a href="mantenimientocurso?accion=ver">Listar todos los cursos</a>
+                </div>
             </div>
 
 
 
         </div>
-        <div class="center3">
+        <div class="center5">
 
             <table>
                 <thead>

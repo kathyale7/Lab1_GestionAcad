@@ -2,6 +2,7 @@
     Document   : agregargrupos
     Created on : 23 abr. 2022, 22:57:04
     Author     : ksand
+                 rolan
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -19,7 +20,7 @@
             <a href="inicioadmin.html">Inicio</a>
             <a href="index.html">Cerrar Sesion</a>
         </div>
-        <div class="center2">
+        <div class="center12">
 
             <div class="space"></div>
 

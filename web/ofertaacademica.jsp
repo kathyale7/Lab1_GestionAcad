@@ -2,6 +2,7 @@
     Document   : ofertaacademica
     Created on : 23 abr. 2022, 21:20:54
     Author     : ksand
+                 rolan
 --%>
 
 <%@page import="Logica.ciclo"%>
@@ -25,7 +26,7 @@
             <a href="index.html">Cerrar Sesion</a>
         </div>
 
-        <div class="buscarCarrera">
+        <div class="buscarCarrera2">
 
             <div class="space"></div>
 
@@ -82,7 +83,7 @@
 
 
 
-            <div>
+            <div class="NuevaBusqueda">
 
                 <a href="ofertaacademica?accion=ver">Nueva busqueda</a>
             </div>

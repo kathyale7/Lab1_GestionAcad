@@ -2,6 +2,7 @@
     Document   : mantenimientocarreras
     Created on : 22 abr. 2022, 22:09:01
     Author     : ksand
+                 rolan
 --%>
 
 <%@page import="Logica.carrera"%>
@@ -32,22 +33,26 @@
 
             <div class="space"></div>
 
-            <form action="mantenimientocarrera">
-
-                    <input type="text" name="buscar" placeholder="Nombre" required>
-                    <button type="submit" name="accion" value="Buscar_n"> Buscar</button>
-
-                </form>
-            <div>
+            <div class="campoboton">
                 <form action="mantenimientocarrera">
 
-                    <input type="text" name="codigo" placeholder="Codigo" required>
-                    <button type="submit" name="accion" value="Buscar_c"> Buscar</button>
+                        <input type="text" name="buscar" placeholder="Nombre" required>
+                        <button type="submit" name="accion" value="Buscar_n"> Buscar</button>
 
-                </form>
-                <a href="mantenimientocarrera?accion=ver">Listar todas las carreras</a>	
+                    </form>
             </div>
-            </div>
+                <div class="campoboton2">
+                    <form action="mantenimientocarrera">
+
+                        <input type="text" name="codigo" placeholder="Codigo" required>
+                        <button type="submit" name="accion" value="Buscar_c"> Buscar</button>
+
+                    </form>
+                    <div class="NuevaBusqueda">
+                        <a href="mantenimientocarrera?accion=ver">Listar todas las carreras</a>	
+                    </div>
+                </div>
+            
             
 
 
